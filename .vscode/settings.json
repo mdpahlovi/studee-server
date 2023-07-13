@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+        "node_modules": true,
+        ".gitignore": true,
+        ".prettierrc": true,
+        "tsconfig.json": true,
+        "yarn.lock": true
+    }
+}
