@@ -8,4 +8,8 @@ router.post('/', validateRequest(BookValidation.createBookZodSchema), BookContro
 
 router.get('/', BookController.getAllBook);
 
+router.get('/:id', BookController.getSingleBook);
+
+router.delete('/:id', BookController.deleteBook);
+
 export const BookRoutes = router;

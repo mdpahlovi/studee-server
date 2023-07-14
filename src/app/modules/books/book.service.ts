@@ -3,6 +3,8 @@ import { isFilterOption } from '../../../shared/filterOption';
 import { bookSearchableFields } from './book.constant';
 import { IBook, IBookFilters, IBookFilterOptions } from './book.interface';
 import { Book } from './book.model';
+import ApiError from '../../../errors/ApiError';
+import httpStatus from 'http-status';
 
 const createBook = async (payload: IBook): Promise<IBook> => {
     const newBook = new Book(payload);
@@ -39,7 +41,47 @@ const getAllBooks = async (filters: IBookFilters, filterOptions: IBookFilterOpti
     return result;
 };
 
+const getSingleBook = async (id: string): Promise<IBook> => {
+    const result = await Book.findById(id);
+    if (!result) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to get book');
+    }
+
+    return result;
+};
+
+const updateBook = async (id: string, payload: Partial<IBook>): Promise<IBook> => {
+    const isExist = await Book.findById(id);
+    if (!isExist) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Book doesn't found");
+    }
+
+    const result = await Book.findByIdAndUpdate(id, payload, { new: true });
+    if (!result) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to update book');
+    }
+
+    return result;
+};
+
+const deleteBook = async (id: string): Promise<IBook> => {
+    const isExist = await Book.findById(id);
+    if (!isExist) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Book doesn't found");
+    }
+
+    const result = await Book.findByIdAndDelete(id);
+    if (!result) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to delete book');
+    }
+
+    return result;
+};
+
 export const BookService = {
     createBook,
     getAllBooks,
+    getSingleBook,
+    updateBook,
+    deleteBook,
 };
