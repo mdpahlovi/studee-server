@@ -5,6 +5,9 @@ const createBookZodSchema = z.object({
         title: z.string({
             required_error: 'Title is Required',
         }),
+        cover: z.string({
+            required_error: 'Cover is Required',
+        }),
         author: z.string().array().nonempty({
             message: 'Author Name is Required',
         }),
@@ -35,6 +38,9 @@ const createBookZodSchema = z.object({
         }),
         price: z.number({
             required_error: 'Price is Required',
+        }),
+        synopsis: z.string({
+            required_error: 'Synopsis is Required',
         }),
     }),
 });

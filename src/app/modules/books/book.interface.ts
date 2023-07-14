@@ -12,6 +12,7 @@ export interface IReview {
 
 export interface IBook extends Document {
     title: string;
+    cover: string;
     author: string[];
     genre: string;
     publicationYear: number;
@@ -19,6 +20,16 @@ export interface IBook extends Document {
     reviews: IReview[];
     rating: number;
     price: number;
+    synopsis: string;
 }
 
 export type BookModel = Model<IBook, Record<string, unknown>>;
+
+export type IBookFilters = {
+    query?: string;
+};
+
+export type IBookFilterOptions = {
+    sortBy?: string;
+    sortOrder?: 'asc' | 'desc';
+};
