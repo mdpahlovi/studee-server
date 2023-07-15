@@ -30,6 +30,7 @@ export type IBookFilters = {
 };
 
 export type IBookFilterOptions = {
+    limit?: number;
     sortBy?: string;
     sortOrder?: 'asc' | 'desc';
 };
