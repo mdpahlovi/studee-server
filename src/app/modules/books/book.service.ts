@@ -56,7 +56,17 @@ const updateBook = async (id: string, payload: Partial<IBook>): Promise<IBook> =
         throw new ApiError(httpStatus.NOT_FOUND, "Book doesn't found");
     }
 
-    const result = await Book.findByIdAndUpdate(id, payload, { new: true });
+    const { publisher, ...bookData } = payload;
+    const updatedBookData: Partial<IBook> = { ...bookData };
+
+    if (publisher && Object.keys(publisher).length > 0) {
+        Object.keys(publisher).forEach(key => {
+            const publisherKey = `publisher.${key}` as keyof Partial<IBook>;
+            (updatedBookData as any)[publisherKey] = publisher[key as keyof typeof publisher];
+        });
+    }
+
+    const result = await Book.findByIdAndUpdate(id, updatedBookData, { new: true });
     if (!result) {
         throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to update book');
     }
