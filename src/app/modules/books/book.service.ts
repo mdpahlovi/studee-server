@@ -13,7 +13,7 @@ const createBook = async (payload: IBook): Promise<IBook> => {
 };
 
 const getAllBooks = async (filters: IBookFilters, filterOptions: IBookFilterOptions): Promise<IBook[]> => {
-    const { query } = filters;
+    const { query, ...filterField } = filters;
     const { limit, sortBy, sortOrder } = isFilterOption(filterOptions);
 
     const andConditions = [];
@@ -23,6 +23,17 @@ const getAllBooks = async (filters: IBookFilters, filterOptions: IBookFilterOpti
             $or: bookSearchableFields.map(field => ({
                 [field]: {
                     $regex: query,
+                    $options: 'i',
+                },
+            })),
+        });
+    }
+
+    if (Object.keys(filterField).length) {
+        andConditions.push({
+            $and: Object.entries(filterField).map(([field, value]) => ({
+                [field]: {
+                    $regex: value,
                     $options: 'i',
                 },
             })),
