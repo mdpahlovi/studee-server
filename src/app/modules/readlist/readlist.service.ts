@@ -4,6 +4,11 @@ import { IReadlist } from './readlist.interface';
 import { Readlist } from './readlist.model';
 
 const createReadlist = async (payload: IReadlist): Promise<IReadlist> => {
+    const isExist = await Readlist.find({ wishlist: payload?.wishlist });
+    if (isExist) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Already Exist');
+    }
+
     const newReadlist = new Readlist(payload);
     const result = await newReadlist.save();
     return result;
