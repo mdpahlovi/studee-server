@@ -15,7 +15,7 @@ export interface IBook extends Document {
     cover: string;
     author: string[];
     genre: string;
-    publicationYear: number;
+    publicationDate: Date;
     publisher: IPublisher;
     reviews: IReview[];
     rating: number;
