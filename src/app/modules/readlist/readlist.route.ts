@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/', ReadlistController.createReadlist);
 
-router.get('/', ReadlistController.getAllReadlist);
+router.get('/:email', ReadlistController.getAllReadlist);
 
 router.patch('/:id', ReadlistController.updateReadlist);
 

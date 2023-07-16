@@ -4,7 +4,7 @@ import { IReadlist } from './readlist.interface';
 import { Readlist } from './readlist.model';
 
 const createReadlist = async (payload: IReadlist): Promise<IReadlist> => {
-    const isExist = await Readlist.find({ wishlist: payload?.wishlist });
+    const isExist = await Readlist.find({ user: payload?.user, book: payload?.book });
     if (isExist) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Already Exist');
     }
@@ -14,8 +14,8 @@ const createReadlist = async (payload: IReadlist): Promise<IReadlist> => {
     return result;
 };
 
-const getAllReadlist = async (ids: string[]): Promise<IReadlist[]> => {
-    const result = await Readlist.find({ wishlist: { $in: ids } }).populate({ path: 'wishlist', populate: { path: 'readlist' } });
+const getAllReadlist = async (email: string): Promise<IReadlist[]> => {
+    const result = await Readlist.find({ user: email }).populate({ path: 'book' });
     return result;
 };
 

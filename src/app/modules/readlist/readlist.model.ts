@@ -3,7 +3,8 @@ import { IReadlist, ReadlistModel } from './readlist.interface';
 
 const readlistSchema = new Schema<IReadlist>(
     {
-        wishlist: { type: Schema.Types.ObjectId, ref: 'Wishlist', required: true },
+        user: { type: String, required: true },
+        book: { type: Schema.Types.ObjectId, ref: 'Book', required: true },
         planToRead: { type: Boolean },
         isReading: { type: Boolean },
         isFinished: { type: Boolean },

@@ -1,8 +1,9 @@
 import { Document, Model, Types } from 'mongoose';
-import { IWishlist } from '../wishlist/wishlist.interface';
+import { IBook } from '../books/book.interface';
 
 export interface IReadlist extends Document {
-    wishlist: Types.ObjectId | IWishlist;
+    user: string;
+    book: Types.ObjectId | IBook;
     planToRead: boolean;
     isReading: boolean;
     isFinished: boolean;

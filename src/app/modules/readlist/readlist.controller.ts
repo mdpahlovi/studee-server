@@ -19,9 +19,9 @@ const createReadlist = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllReadlist = catchAsync(async (req: Request, res: Response) => {
-    const ids = req.body;
+    const { email } = req.params;
 
-    const result = await ReadlistService.getAllReadlist(ids);
+    const result = await ReadlistService.getAllReadlist(email);
 
     sendResponse<IReadlist[]>(res, {
         success: true,
