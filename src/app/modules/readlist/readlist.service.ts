@@ -4,7 +4,7 @@ import { IReadlist } from './readlist.interface';
 import { Readlist } from './readlist.model';
 
 const createReadlist = async (payload: IReadlist): Promise<IReadlist> => {
-    const isExist = await Readlist.find({ user: payload?.user, book: payload?.book });
+    const isExist = await Readlist.findOne({ user: payload?.user, book: payload?.book });
     if (isExist) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Already Exist');
     }
